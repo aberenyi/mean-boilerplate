@@ -1,0 +1,8 @@
+.container
+  .row(ng-repeat="project in vm.projects")
+    span
+      | {{project._id}}
+      a(href="{{project.url}}") {{project.url}}
+  .row
+    a(href="/client1/project3") Client1::Project3
+

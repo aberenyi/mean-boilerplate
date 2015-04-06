@@ -1,0 +1,7 @@
+.idea
+.rebooted
+node_modules
+bower_components
+public/assets/fonts
+public/dist
+public/vendor

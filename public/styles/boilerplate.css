@@ -1,0 +1,13 @@
+.navbar {
+  margin-bottom: 0;
+  max-height: 50px;
+}
+.navbar-form .form-group {
+  margin-left: 10px;
+}
+.navbar-form button {
+  margin-left: 10px;
+}
+body {
+  padding-top: 69px;
+}

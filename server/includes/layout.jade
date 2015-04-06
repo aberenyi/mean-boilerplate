@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    base(href="/")
+    title MEAN Boilerplate
+    //link(href="/favicon.ico", rel="shortcut icon", type="image/x-icon")
+    include styles
+
+  body(ng-app='app')
+    include currentUser
+    div(ng-include="'/partials/account/navbar'")
+    block content
+    include scripts
