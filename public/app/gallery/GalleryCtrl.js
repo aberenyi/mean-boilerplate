@@ -1,3 +1,5 @@
+require('../account/Identity');
+
 angular
   .module('app')
   .controller('GalleryCtrl', GalleryCtrl);

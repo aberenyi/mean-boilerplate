@@ -1,6 +1,6 @@
 {
   "name": "mean-boilerplate",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Boilerplate for MEAN apps",
   "main": "server.js",
   "directories": {
@@ -26,10 +26,17 @@
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
     "stdio": "^0.2.7",
-    "stylus": "^0.50.0",
-    "winston": "^0.9.0"
+    "stylus": "^0.50.0"
   },
   "devDependencies": {
+    "angular": "^1.4.5",
+    "angular-bootstrap": "^0.12.2",
+    "angular-resource": "^1.4.5",
+    "angular-route": "^1.4.5",
+    "bootstrap": "^3.3.5",
+    "css-loader": "^0.17.0",
+    "file-loader": "^0.8.4",
+    "font-awesome": "^4.4.0",
     "grunt": "^0.4.5",
     "grunt-bowercopy": "^1.2.0",
     "grunt-concurrent": "^1.0.0",
@@ -43,8 +50,15 @@
     "grunt-gitinfo": "^0.1.7",
     "grunt-ng-annotate": "^0.10.0",
     "grunt-nodemon": "^0.4.0",
+    "jquery": "^2.1.4",
     "load-grunt-tasks": "^3.1.0",
+    "ng-annotate-webpack-plugin": "^0.1.2",
     "open": "0.0.5",
-    "time-grunt": "^1.1.0"
+    "source-map-loader": "^0.1.5",
+    "style-loader": "^0.12.3",
+    "time-grunt": "^1.1.0",
+    "toastr": "^2.1.2",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.12.1"
   }
 }

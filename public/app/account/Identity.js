@@ -1,3 +1,5 @@
+require('./User');
+
 angular
   .module('app')
   .factory('Identity', Identity);

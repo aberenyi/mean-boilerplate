@@ -1,5 +1,10 @@
 angular.module('app', ['ngResource', 'ngRoute']);
 
+require('./account/Auth');
+require('./account/LoginCtrl');
+require('./gallery/GalleryCtrl');
+require('./project/ProjectCtrl');
+
 angular
   .module('app')
   .config(function($routeProvider, $locationProvider)

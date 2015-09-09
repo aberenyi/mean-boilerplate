@@ -1,8 +1,12 @@
+require('./Identity');
+require('./Auth');
+require('../core/Notifier');
+
 angular
   .module('app')
   .controller('LoginCtrl', LoginCtrl);
 
-function LoginCtrl(Identity, Notifier, Auth, $location)
+function LoginCtrl(Identity, Auth, Notifier, $location)
 {
   var vm = this;
   vm.identity = Identity;

@@ -1,3 +1,6 @@
+require('./Identity');
+require('./User');
+
 angular
   .module('app')
   .factory('Auth', Auth);
