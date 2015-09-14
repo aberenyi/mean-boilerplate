@@ -1,6 +1,7 @@
 'use strict';
 
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports =
 {
@@ -10,7 +11,7 @@ module.exports =
   },
   output: {
     path:  __dirname + '/public/dist',
-    filename: 'vendor.min.js'
+    filename: 'vendor-[hash].min.js'
   },
   devtool: 'source-map', //-d
   module: {
@@ -27,6 +28,15 @@ module.exports =
   },
   plugins:
   [
+    new HtmlWebpackPlugin({
+      filename: '../../server/includes/scriptsVendor.jade',
+      templateContent: function(templateParams)
+      {
+        return 'script(type="text/javascript", src="/dist/' +
+          templateParams.webpackConfig.output.filename.replace('[hash]', templateParams.webpack.hash) + '")';
+      }
+    }),
+    //new AssetsPlugin({filename: 'assetsVendor.json'}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin() //-p
   ]

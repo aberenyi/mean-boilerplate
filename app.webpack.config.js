@@ -2,6 +2,7 @@
 
 var webpack = require('webpack');
 var ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports =
 {
@@ -11,7 +12,7 @@ module.exports =
   },
   output: {
     path:  __dirname + '/public/dist',
-    filename: 'app.min.js'
+    filename: 'app-[hash].min.js'
   },
   devtool: 'source-map', //-d
   module: {
@@ -34,6 +35,16 @@ module.exports =
   },
   plugins:
   [
+    new HtmlWebpackPlugin({
+      filename: '../../server/includes/scriptsApp.jade',
+      inject: true,
+      templateContent: function(templateParams)
+      {
+        return 'script(type="text/javascript", src="/dist/' +
+          templateParams.webpackConfig.output.filename.replace('[hash]', templateParams.webpack.hash) + '")';
+      }
+    }),
+    //new AssetsPlugin({filename: 'assetsApp.json'}),
     new webpack.optimize.DedupePlugin(),
     new ngAnnotatePlugin(),
     new webpack.optimize.UglifyJsPlugin() //-p

@@ -1,8 +1,6 @@
-var express = require('express'),
-  git = require('git-rev-sync');
+var express = require('express');
 
-var env = process.env.ENV = process.env.ENV || 'dev',
-  rev = process.env.REV = git.short();
+var env = process.env.ENV = process.env.ENV || 'dev';
 
 var app = express();
 
@@ -13,5 +11,4 @@ require('./server/config/passport')(config);
 require('./server/config/routes')(app);
 
 app.listen(config.port);
-//TODO: add winston
 console.log('Listening on port ' + config.port + '...');

@@ -13,7 +13,6 @@ module.exports = function(app)
   app.get('/api/projects', auth.requiresLogin, project.getProjects);
   //app.get('/api/project/:id', auth.requiresLogin, project.getProject);
 
-
   app.get('/partials/*', function(req, res)
   {
     res.render('../../public/app/' + req.params[0]);

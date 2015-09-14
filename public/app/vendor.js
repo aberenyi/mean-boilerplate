@@ -14,3 +14,5 @@ require('angular-resource');
 require('bootstrap');
 require('../../node_modules/bootstrap/dist/css/bootstrap.min.css');
 require('angular-bootstrap');
+
+require('../styles/overrides.css');

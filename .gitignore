@@ -1,7 +1,6 @@
 .idea
-.rebooted
 node_modules
-bower_components
+assets*.json
 public/assets/fonts
 public/dist
 public/vendor

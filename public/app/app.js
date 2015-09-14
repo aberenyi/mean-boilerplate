@@ -5,6 +5,8 @@ require('./account/LoginCtrl');
 require('./gallery/GalleryCtrl');
 require('./project/ProjectCtrl');
 
+require('../styles/boilerplate.css');
+
 angular
   .module('app')
   .config(function($routeProvider, $locationProvider)
@@ -37,7 +39,7 @@ angular
     $locationProvider.html5Mode(true);
     $routeProvider
       .when('/', {templateUrl: '/partials/index/index'})
-      .when('/admin', {templateUrl: '/partials/admin/dummy', resolve: routeRoleChecks.admin})
+      .when('/admin', {templateUrl: '/partials/admin/duummy', resolve: routeRoleChecks.admin})
       .when('/gallery', {templateUrl: '/partials/gallery/gallery',
         controller: 'GalleryCtrl', controllerAs: 'vm'
       })
