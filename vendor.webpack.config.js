@@ -36,7 +36,6 @@ module.exports =
           templateParams.webpackConfig.output.filename.replace('[hash]', templateParams.webpack.hash) + '")';
       }
     }),
-    //new AssetsPlugin({filename: 'assetsVendor.json'}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin() //-p
   ]

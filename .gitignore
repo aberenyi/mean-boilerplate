@@ -1,6 +1,5 @@
 .idea
 node_modules
-assets*.json
 public/assets/fonts
 public/dist
-public/vendor
+server/includes/scripts*.jade
