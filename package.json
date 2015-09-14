@@ -36,6 +36,7 @@
     "angular-route": "^1.4.5",
     "bootstrap": "^3.3.5",
     "css-loader": "^0.17.0",
+    "cz-conventional-changelog": "^1.1.0",
     "del": "^2.0.2",
     "file-loader": "^0.8.4",
     "font-awesome": "^4.4.0",
