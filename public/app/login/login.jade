@@ -1,0 +1,15 @@
+md-content(layout-padding="")
+  div(layout="row")
+    div(flex hide-sm)
+    div(flex)
+      form
+        md-input-container
+          label E-mail
+          input(ng-model="uid")
+        md-input-container
+          label Password
+          input(type="password" ng-model="pwd")
+        div(layout="column" layout-align="center center")
+          md-button(ng-click="vm.signin(uid, pwd)") Login
+      div Fooo  
+    div(flex hide-sm)

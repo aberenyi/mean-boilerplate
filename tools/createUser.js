@@ -1,6 +1,6 @@
 var stdio = require('stdio'),
-  hashPwd = require('../core/hashPassword'),
-  db = require('../core/db');
+  hashPwd = require('./hashPassword'),
+  db = require('./db');
 
 var args = stdio.getopt
 ({

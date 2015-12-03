@@ -16,10 +16,15 @@ module.exports =
   devtool: 'source-map', //-d
   module: {
     loaders: [
+      { test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery' },
       {
         test: /\.css$/,
         loader: "style!css"
       },
+      /*{
+        test: /\.scss$/,
+        loader: 'style!css!sass'
+      },*/
       {
         test: /\.(woff|woff2|ttf|eot|svg)(\?]?.*)?$/,
         loader : 'file-loader?name=../assets/fonts/[name].[ext]?[hash]'

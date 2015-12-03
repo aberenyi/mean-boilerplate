@@ -1,8 +1,21 @@
-.container
-  .row(ng-repeat="project in vm.projects")
-    span
-      | {{project._id}}
-      a(href="{{project.url}}") {{project.url}}
-  .row
-    a(href="/client1/project3") Client1::Project3
+//md-button.md-fab.md-fab-top-right(ng-click="vm.toggleRight()") Menu
+div(layout="row" layout-align="end center")
+  md-button.md-primary.md-fab(ng-click="vm.toggleRight()")
+    md-icon(md-svg-icon="action:ic_exit_to_app_24px")
 
+md-sidenav.md-sidenav-right.md-whiteframe-z2(md-component-id="right")
+  md-toolbar
+    .md-toolbar-tools Welcome, Stranger!
+  md-content(layout-padding)
+    md-button.md-primary(ng-click="close()") Close Sidenav Right
+    md-button.md-warn(ng-click="vm.signout()") Logout
+
+div(layout="row")
+  div(flex)
+    md-divider
+div(layout="row" layout-wrap)
+  md-card(ng-repeat="project in vm.projects")
+    md-toolbar.md-primary
+      md-button(ng-href="{{project.url}}") {{project.url}}
+    md-card-content
+      p {{project._id}}

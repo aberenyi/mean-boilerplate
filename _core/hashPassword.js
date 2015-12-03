@@ -1,5 +1,5 @@
-var crypto = require('crypto'),
-  base64url = require('base64url');
+var crypto = require('crypto')
+var base64url = require('base64url')
 
 /**
  * Common password functions.

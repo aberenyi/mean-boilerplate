@@ -11,7 +11,8 @@ module.exports =
     app: './app.js'
   },
   output: {
-    path:  __dirname + '/public/dist',
+    path:  __dirname + '/public',
+    publicPath: '/dist/',
     filename: 'app-[hash].min.js'
   },
   devtool: 'source-map', //-d
@@ -35,17 +36,21 @@ module.exports =
   },
   plugins:
   [
-    new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin
+    ({
       filename: '../../server/includes/scriptsApp.jade',
       inject: true,
       templateContent: function(templateParams)
       {
-        return 'script(type="text/javascript", src="/dist/' +
-          templateParams.webpackConfig.output.filename.replace('[hash]', templateParams.webpack.hash) + '")';
+        var hash = templateParams.webpackConfig.output.filename.replace('app-[hash]', templateParams.webpack.hash);
+        return '' +
+          'script(type="text/javascript", src="/dist/common-' + hash + '")\n' +
+          'script(type="text/javascript", src="/dist/app-' + hash + '")';
       }
     }),
+    new webpack.optimize.CommonsChunkPlugin('common-[hash].min.js'),
     new webpack.optimize.DedupePlugin(),
-    new ngAnnotatePlugin(),
-    new webpack.optimize.UglifyJsPlugin() //-p
+    new ngAnnotatePlugin()//,
+    //new webpack.optimize.UglifyJsPlugin() //-p
   ]
 };

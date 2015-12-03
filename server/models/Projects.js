@@ -1,5 +1,5 @@
-var config = require('../config/config')[process.env.ENV],
-  db = require(config.rootPath + 'core/db');
+var config = require('../../_core/config')
+var db = require('../../_core/db')
 
-var mongo = new db.Mongo(config.db);
-module.exports = mongo.model('projects');
+var mongo = new db.Mongo(config.db)
+module.exports = mongo.model('projects')

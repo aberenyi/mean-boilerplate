@@ -1,9 +1,14 @@
-angular.module('app', ['ngResource', 'ngRoute']);
+'use strict';
 
-require('./account/Auth');
-require('./account/LoginCtrl');
-require('./gallery/GalleryCtrl');
-require('./project/ProjectCtrl');
+angular.module('app', ['ngRoute', 'oc.lazyLoad', 'ngResource', 'ngMaterial', 'ngMessages']);
+
+//common modules
+require('./core/User');
+require('./core/Identity');
+require('./core/Auth');
+//require('./_core/Notifier');
+
+//require('./project/ProjectCtrl');
 
 require('../styles/boilerplate.css');
 
@@ -38,23 +43,46 @@ angular
 
     $locationProvider.html5Mode(true);
     $routeProvider
-      .when('/', {templateUrl: '/partials/index/index'})
-      .when('/admin', {templateUrl: '/partials/admin/duummy', resolve: routeRoleChecks.admin})
+      .when('/', {templateUrl: '/partials/login/login', controller: 'LoginCtrl as vm',
+        resolve:
+        {
+          lazyLoad: ['$q', '$ocLazyLoad', function ($q, $ocLazyLoad)
+          {
+            var deferred = $q.defer();
+            require.ensure([], function()
+            {
+              var module = require('./login/Login');
+              $ocLazyLoad.load({name: 'app.login'});
+              deferred.resolve(module);
+            });
+
+            return deferred.promise;
+          }]
+        }
+      })
+      .when('/admin', {templateUrl: '/partials/admin/dummy', resolve: routeRoleChecks.admin})
       .when('/gallery', {templateUrl: '/partials/gallery/gallery',
-        controller: 'GalleryCtrl', controllerAs: 'vm'
+        controller: 'GalleryCtrl as vm'/*, controllerAs: 'vm'*/, resolve:
+        {
+          lazyLoad: ['$q', '$ocLazyLoad', function ($q, $ocLazyLoad)
+          {
+            var deferred = $q.defer();
+            require.ensure([], function()
+            {
+              var module = require('./gallery/Gallery');
+              $ocLazyLoad.load({name: 'app.gallery'});
+              deferred.resolve(module);
+            });
+
+            return deferred.promise;
+          }]
+        }
       })
-      .when('/:client/:project', {templateUrl: '/partials/project/project',
+      /*.when('/:client/:project', {templateUrl: '/partials/project/project',
         controller: 'ProjectCtrl', controllerAs: 'vm', resolve: routeRoleChecks.project
-      });
-      /*
-      .when('/signup', { templateUrl: '/partials/account/signup',
-        controller: 'mvSignupCtrl'
-      })
-      .when('/profile', { templateUrl: '/partials/account/profile',
-        controller: 'mvProfileCtrl', resolve: routeRoleChecks.User
-      })
-      */
+      })*/;
   });
+
 
 angular
   .module('app')

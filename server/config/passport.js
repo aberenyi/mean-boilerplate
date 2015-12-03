@@ -1,9 +1,12 @@
-var passport = require('passport'),
-  localStrategy = require('passport-local').Strategy,
-  db = require('../../core/db'),
-  Users = require('../models/Users'),
-  Projects = require('../models/Projects'),
-  hashPwd = require('../../core/hashPassword');
+'use strict'
+
+var passport = require('passport')
+var localStrategy = require('passport-local').Strategy
+var db = require('../../_core/db')
+
+var Users = require('../models/Users')
+var Projects = require('../models/Projects')
+var hashPwd = require('../../_core/hashPassword')
 
 module.exports = function()
 {

@@ -1,0 +1,8 @@
+{
+  "preset": "google",
+  "disallowNewlineBeforeBlockStatements": null,
+  "disallowMultipleVarDecl": null,
+  "disallowKeywordsOnNewLine": null,
+  "maximumLineLength": 120,
+  "excludeFiles": ["node_modules/**", "bower_components/**"]
+}

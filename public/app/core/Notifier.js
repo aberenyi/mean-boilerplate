@@ -1,21 +1,36 @@
+'use strict';
+
+/**
+ * @ngdoc service
+ * @name app.toastr
+ * @description Materialize global value
+ */
 angular
   .module('app')
-  .value('toastr', toastr);
+  .value('Materialize', Materialize);
 
+/**
+ * @ngdoc service
+ * @name app.Notifier
+ * @description Notifier factors
+ * @requires app.toastr
+ */
 angular
   .module('app')
   .factory('Notifier', Notifier);
 
-function Notifier(toastr)
+function Notifier(Materialize)
 {
   return {
-    notify: function(msg)
+    notify: function(msg, duration)
     {
-      toastr.success(msg);
+      var _duration = !!duration ? duration : 1000;
+      Materialize.toast(msg, _duration, 'green');
     },
-    error: function (msg)
+    error: function (msg, duration)
     {
-      toastr.error(msg);
+      var _duration = !!duration ? duration : 1000;
+      Materialize.toast(msg, _duration, 'red');
     }
   };
 }

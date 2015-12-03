@@ -1,10 +1,17 @@
-require('./User');
+'use strict';
 
+/**
+ * @ngdoc service
+ * @name app.Identity
+ * @description Auth factory
+ * @requires app.User
+ * @requires $window
+ */
 angular
   .module('app')
   .factory('Identity', Identity);
 
-function Identity($window, User)
+function Identity(User, $window)
 {
   var currentUser;
   if (!!$window.__user)

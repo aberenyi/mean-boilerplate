@@ -1,3 +1,12 @@
+'use strict';
+
+/**
+ * @ngdoc service
+ * @name app.User
+ * @description User factory
+ * @requires app.Identity
+ * @requires app.User
+ */
 angular
   .module('app')
   .factory('User', User);

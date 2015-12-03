@@ -3,11 +3,13 @@ html
   head
     base(href="/")
     title MEAN Boilerplate
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(http-equiv="x-ua-compatible" content="ie=edge")
     //link(href="/favicon.ico", rel="shortcut icon", type="image/x-icon")
 
   body(ng-app='app')
     include currentUser
-    div(ng-include="'/partials/account/navbar'")
     block content
     include scriptsVendor
     include scriptsApp

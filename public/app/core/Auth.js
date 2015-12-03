@@ -1,6 +1,14 @@
-require('./Identity');
-require('./User');
+'use strict';
 
+/**
+ * @ngdoc service
+ * @name app.Auth
+ * @description Auth factory
+ * @requires app.Identity
+ * @requires app.User
+ * @requires $http
+ * @requires $q
+ */
 angular
   .module('app')
   .factory('Auth', Auth);

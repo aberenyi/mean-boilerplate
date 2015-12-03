@@ -1,0 +1,16 @@
+{
+  "asi": true,
+  "node": true,
+  "browser": true,
+  "strict": true,
+  "curly": true,
+  "undef": true,
+  "quotmark": "single",
+  "globals":
+  {
+    "console": false,
+    "require": false,
+    "module": false,
+    "angular": false
+  }
+}

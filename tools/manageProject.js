@@ -1,5 +1,5 @@
 var stdio = require('stdio'),
-  db = require('../core/db');
+  db = require('./db');
 
 var args = stdio.getopt
 ({

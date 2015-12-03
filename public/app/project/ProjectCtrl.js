@@ -1,4 +1,4 @@
-require('../account/Identity');
+require('../core/Identity');
 
 angular
   .module('app')
