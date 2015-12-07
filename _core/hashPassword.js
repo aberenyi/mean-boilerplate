@@ -1,3 +1,5 @@
+'use strict'
+
 var crypto = require('crypto')
 var base64url = require('base64url')
 

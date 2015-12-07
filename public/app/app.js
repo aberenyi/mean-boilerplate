@@ -1,44 +1,50 @@
 'use strict';
 
-angular.module('app', ['ngRoute', 'oc.lazyLoad', 'ngResource', 'ngMaterial', 'ngMessages']);
+angular.module('app', ['ngRoute', 'oc.lazyLoad', 'ngResource', 'ngMaterial', 'ngMessages', 'angular-storage',
+  'angular-jwt']);
 
 //common modules
 require('./core/User');
 require('./core/Identity');
 require('./core/Auth');
-//require('./_core/Notifier');
 
-//require('./project/ProjectCtrl');
-
-require('../styles/boilerplate.css');
+require('../styles/overrides.css')
+require('../styles/boilerplate.css')
 
 angular
   .module('app')
-  .config(function($routeProvider, $locationProvider)
+  .config(function($routeProvider, $httpProvider, $locationProvider, $mdIconProvider, jwtInterceptorProvider)
   {
+    jwtInterceptorProvider.tokenGetter = function(store)
+    {
+      return store.get('token')
+    };
+
+    $httpProvider.interceptors.push('jwtInterceptor');
+
     var routeRoleChecks =
     {
-      project:
-      {
-        auth: ['Auth', '$location', function(Auth, $location)
-        {
-          return Auth.authorizeAuthenticatedUserForProject($location.url());
-        }]
-      },
+      //project:
+      //{
+      //  auth: ['Auth', '$location', function(Auth, $location)
+      //  {
+      //    return Auth.authorizeAuthenticatedUserForProject($location.url());
+      //  }]
+      //},
       admin:
       {
         auth: ['Auth', function(Auth)
         {
           return Auth.authorizeCurrentUserForRoute('admin');
         }]
-      },
-      user:
-      {
-        auth: ['Auth', function(Auth)
-        {
-          return Auth.authorizeAuthenticatedUserForRoute();
-        }]
-      }
+      }//,
+      //user:
+      //{
+      //  auth: ['Auth', function(Auth)
+      //  {
+      //    return Auth.authorizeAuthenticatedUserForRoute();
+      //  }]
+      //}
     };
 
     $locationProvider.html5Mode(true);
@@ -60,9 +66,24 @@ angular
           }]
         }
       })
-      .when('/admin', {templateUrl: '/partials/admin/dummy', resolve: routeRoleChecks.admin})
+      .when('/admin', {templateUrl: '/partials/admin/admin', resolve:
+      {
+        auth: ['$q', 'Auth', function($q, Auth)
+        {
+          var dfd = $q.defer()
+          if (Auth.authorizeCurrentUserForRoute('admin'))
+          {
+            dfd.resolve()
+          }
+          else
+          {
+            dfd.reject('not authorized')
+          }
+          return dfd.promise;
+        }]
+      }})
       .when('/gallery', {templateUrl: '/partials/gallery/gallery',
-        controller: 'GalleryCtrl as vm'/*, controllerAs: 'vm'*/, resolve:
+        controller: 'GalleryCtrl as vm', resolve:
         {
           lazyLoad: ['$q', '$ocLazyLoad', function ($q, $ocLazyLoad)
           {
@@ -75,14 +96,26 @@ angular
             });
 
             return deferred.promise;
-          }]
+          }]/*,
+          auth: ['$q', 'Auth', function($q, Auth)
+          {
+            var dfd = $q.defer()
+            if (Auth.authorizeCurrentUserForRoute('admin'))
+            {
+              dfd.resolve(true)
+            }
+            else
+            {
+              dfd.reject(false)
+            }
+            return dfd.promise;
+          }]*/
         }
       })
-      /*.when('/:client/:project', {templateUrl: '/partials/project/project',
-        controller: 'ProjectCtrl', controllerAs: 'vm', resolve: routeRoleChecks.project
-      })*/;
-  });
 
+    $mdIconProvider
+      .iconSet('action', 'assets/icons/sets/svg-sprite-action.svg', 24)
+  });
 
 angular
   .module('app')
@@ -90,9 +123,9 @@ angular
   {
     $rootScope.$on('$routeChangeError', function(evt, current, previous, rejection)
     {
-      if (rejection === 'not authorized')
+      if (rejection == 'not authorized')
       {
-        $location.path('/');
+        $location.path(previous.originalPath || '/');
       }
     });
   });

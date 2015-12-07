@@ -13,11 +13,11 @@ angular
 
 function User($resource)
 {
-  //var UserResource = $resource('/api/users/:id', {_id: "@id"});
-  var UserResource = $resource();
+  var UserResource = $resource('/api/me');
 
-  UserResource.prototype.isAdmin = function() {
-    return this.roles && this.roles.indexOf('admin') > -1;
+  UserResource.prototype.isAdmin = function()
+  {
+    return this.groups && this.groups.indexOf('admin') !== -1;
   };
 
   return UserResource;

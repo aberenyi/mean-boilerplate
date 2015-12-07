@@ -13,7 +13,7 @@ angular
   .module('app')
   .factory('Auth', Auth);
 
-function Auth(Identity, User, $http, $q)
+function Auth(Identity, User, $http, $q, store)
 {
   return {
     authenticateUser: function(username, password)
@@ -23,14 +23,19 @@ function Auth(Identity, User, $http, $q)
         .post('/login', {username: username, password: password})
         .then(function(response)
         {
-          if (response.data.success)
+          if (response.data.success && response.data.user.token)
           {
-            //FIXME: User name collision
-            var UserInstance = new User();
-            angular.extend(UserInstance, response.data.user);
-            Identity.currentUser = UserInstance;
-            dfd.resolve(true);
-          } else
+            //store the token in the session storage
+            store.set('token', response.data.user.token)
+
+            //populate Identity's currentUser with groups & stuff
+            User.get().$promise.then(function(user)
+            {
+              Identity.currentUser = user
+              dfd.resolve(true);
+            })
+          }
+          else
           {
             dfd.resolve(false);
           }
@@ -43,35 +48,37 @@ function Auth(Identity, User, $http, $q)
       $http.post('/logout', {logout: true}).then(function ()
       {
         Identity.currentUser = undefined;
+        store.remove('token');
         dfd.resolve();
       });
       return dfd.promise;
     },
-    authorizeCurrentUserForRoute: function (role)
+    authorizeCurrentUserForRoute: function(group)
     {
-      if (Identity.isAuthorized(role))
-      {
-        return true;
-      }
-      else
-      {
-        return $q.reject('not authorized');
-      }
-
-    },
-    authorizeAuthenticatedUserForRoute: function ()
-    {
-      if (Identity.isAuthenticated())
-      {
-        return true;
-      } else
-      {
-        return $q.reject('not authorized');
-      }
-    },
-    authorizeAuthenticatedUserForProject: function(url)
-    {
-      return Identity.isAuthorizedForProject(url) ? true : $q.reject('not authorized');
-    }
+      //if (Identity.hasGroup(group))
+      //{
+      //  return true;
+      //}
+      //else
+      //{
+      //  console.log('nope')
+      //  return $q.reject('not authorized');
+      //}
+      return Identity.hasGroup(group)
+    }//,
+    //authorizeAuthenticatedUserForRoute: function ()
+    //{
+    //  if (Identity.isAuthenticated())
+    //  {
+    //    return true;
+    //  } else
+    //  {
+    //    return $q.reject('not authorized');
+    //  }
+    //},
+    //authorizeAuthenticatedUserForProject: function(url)
+    //{
+    //  return Identity.isAuthorizedForProject(url) ? true : $q.reject('not authorized');
+    //}
   };
 }

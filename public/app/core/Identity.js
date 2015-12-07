@@ -5,48 +5,56 @@
  * @name app.Identity
  * @description Auth factory
  * @requires app.User
- * @requires $window
  */
 angular
   .module('app')
   .factory('Identity', Identity);
 
-function Identity(User, $window)
+function Identity(User, store)
 {
+  //console.log(jwtHelper.decodeToken(store.get('token')))
+
   var currentUser;
-  if (!!$window.__user)
+
+  //page reload, but already authenticated
+  if (!currentUser && isAuthenticated())
   {
-    currentUser = new User();
-    angular.extend(currentUser, $window.__user);
+    currentUser = User.get()
   }
 
   return {
     currentUser: currentUser,
     isAuthenticated: isAuthenticated,
-    isAuthorized: isAuthorized,
-    isAuthorizedForProject: isAuthorizedForProject
+    hasGroup: hasGroup
+    //isAuthorized: isAuthorized,
+    //isAuthorizedForProject: isAuthorizedForProject
   };
 
   function isAuthenticated()
   {
-    return !!this.currentUser;
+    return !!store.get('token');
   }
 
-  function isAuthorized(role)
+  function hasGroup(group)
   {
-    return !!this.currentUser && this.currentUser.groups.indexOf(role) > -1;
+    return !!this.currentUser.groups && this.currentUser.groups.indexOf(group) > -1;
   }
 
-  function isAuthorizedForProject(url)
-  {
-    var authorizedForProject = false;
-    angular.forEach(this.currentUser.projects, function(project)
-    {
-      if (project.url === url)
-      {
-        authorizedForProject = true;
-      }
-    });
-    return !!this.currentUser && authorizedForProject;
-  }
+  //function isAuthorized(role)
+  //{
+  //  return !!this.currentUser.groups && this.currentUser.groups.indexOf(role) > -1;
+  //}
+
+  //function isAuthorizedForProject(url)
+  //{
+  //  var authorizedForProject = false;
+  //  angular.forEach(this.currentUser.projects, function(project)
+  //  {
+  //    if (project.url === url)
+  //    {
+  //      authorizedForProject = true;
+  //    }
+  //  });
+  //  return !!this.currentUser && authorizedForProject;
+  //}
 }

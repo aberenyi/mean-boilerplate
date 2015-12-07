@@ -4,8 +4,8 @@
  * @description Login controller
  * @requires app.Identity
  * @requires app.Auth
- * @requires app.Notifier
  * @requires $location
+ * @requires $mdToast
  */
 function LoginCtrl(Identity, Auth, $location, $mdToast)
 {
@@ -30,16 +30,15 @@ function LoginCtrl(Identity, Auth, $location, $mdToast)
         }
         else
         {
-          $mdToast
-            .simple()
-            .content('Please try again.');
+          $mdToast.showSimple('Please try again.');
         }
       });
   };
 
   vm.signout = function()
   {
-    Auth.logoutUser().then(function() {
+    Auth.logoutUser().then(function()
+    {
       vm.username = '';
       vm.password = '';
       Notifier.notify('You have successfully signed out!');

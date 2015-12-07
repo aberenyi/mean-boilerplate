@@ -1,21 +1,16 @@
-//md-button.md-fab.md-fab-top-right(ng-click="vm.toggleRight()") Menu
-div(layout="row" layout-align="end center")
-  md-button.md-primary.md-fab(ng-click="vm.toggleRight()")
-    md-icon(md-svg-icon="action:ic_exit_to_app_24px")
-
-md-sidenav.md-sidenav-right.md-whiteframe-z2(md-component-id="right")
-  md-toolbar
-    .md-toolbar-tools Welcome, Stranger!
-  md-content(layout-padding)
-    md-button.md-primary(ng-click="close()") Close Sidenav Right
-    md-button.md-warn(ng-click="vm.signout()") Logout
-
-div(layout="row")
-  div(flex)
-    md-divider
-div(layout="row" layout-wrap)
-  md-card(ng-repeat="project in vm.projects")
-    md-toolbar.md-primary
-      md-button(ng-href="{{project.url}}") {{project.url}}
-    md-card-content
-      p {{project._id}}
+div(layout="row" layout-padding)
+  div(flex="10" layout="column")
+    md-icon(hide-gt-md md-svg-icon="action:ic_exit_to_app_24px")
+    md-sidenav.md-sidenav-left(md-component-id="sidenavLeft" md-is-locked-open="$mdMedia('gt-md')")
+      md-button.md-primary(ng-click="close()")
+        md-icon(md-svg-icon="action:ic_exit_to_app_24px")
+      md-button.md-warn(ng-click="vm.signout()")
+        md-icon(md-svg-icon="action:ic_exit_to_app_24px")
+  div(flex="90" layout="row")
+    //md-button(ng-if="vm.identity.currentUser.isAdmin()" href="/#/admin") Adminy-type stuff
+    md-button(href="/#/admin") Adminy-type stuff
+    md-card(ng-repeat="project in vm.projects")
+      md-toolbar.md-primary
+        md-button(ng-href="{{project.url}}") {{project.url}}
+      md-card-content
+        p {{project._id}}

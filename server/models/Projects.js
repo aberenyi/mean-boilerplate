@@ -1,3 +1,5 @@
+'use strict'
+
 var config = require('../../_core/config')
 var db = require('../../_core/db')
 

@@ -6,29 +6,36 @@
  * @description Gallery controller
  * @requires app.Identity
  * @requires app.Auth
- * @requires $location
  */
-function GalleryCtrl(Identity, Auth, $mdToast, $mdSidenav, $location)
+function GalleryCtrl(Identity, Auth, $http, $mdToast, $mdSidenav, $location)
 {
   var vm = this;
-  vm.projects = Identity.currentUser.projects;
+  vm.identity = Identity
 
+  //DEV ONLY//
   vm.signout = function()
   {
-    Auth.logoutUser().then(function() {
-      vm.username = '';
-      vm.password = '';
-      $mdToast
-        .simple()
-        .content('You have successfully signed out!');
+    Auth.logoutUser().then(function()
+    {
+      $mdToast.showSimple('You have successfully signed out!');
       $location.path('/');
     });
   };
 
   vm.toggleRight = function ()
   {
-    $mdSidenav('right').toggle()
+    $mdSidenav('sidenavRight').toggle()
   }
+
+  $http
+    .get('/api/projects', {cache: true})
+    .then(function(response)
+    {
+      if (response.status === 200 && response.data)
+      {
+        vm.projects = response.data
+      }
+    })
 }
 
 module.exports = GalleryCtrl;

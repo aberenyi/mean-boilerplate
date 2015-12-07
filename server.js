@@ -9,3 +9,9 @@ require('./server/config/passport')(config)
 require('./server/config/routes')(app)
 app.listen(config.port)
 console.log('Listening on port ' + config.port + '...')
+
+//TODO: check whether this is working or not...
+process.on('uncaughtException', function(err)
+{
+  console.log(err);
+});

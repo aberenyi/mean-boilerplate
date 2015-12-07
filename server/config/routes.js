@@ -1,17 +1,18 @@
-var auth = require('./auth'),
-  project = require('../controllers/project');
+'use strict'
+
+var auth = require('./auth')
+var project = require('../controllers/project')
+var user = require('../controllers/user')
 
 module.exports = function(app)
 {
+  //unprotected routes
   app.post('/login', auth.authenticate);
   app.post('/logout', function(req, res)
   {
     req.logout();
     res.end();
   });
-
-  app.get('/api/projects', auth.requiresLogin, project.getProjects);
-  //app.get('/api/project/:id', auth.requiresLogin, project.getProject);
 
   app.get('/partials/*', function(req, res)
   {
@@ -20,17 +21,33 @@ module.exports = function(app)
 
   app.get('/', function(req, res)
   {
-    res.render('index', {__user: req.user});
+    //res.render('index', {__user: req.user});
+    res.render('index');
   });
 
+  //protected routes
+  app.use('/api/*', auth.requiresLogin);
+  app.get('/api/me', user.getUser)
+  app.get('/api/projects', project.getProjects);
   app.all('/api/*', function(req, res)
   {
     res.send(404);
   });
 
+  //catch all route
   app.get('*', function(req, res)
   {
     res.redirect('/');
   });
-  //app.get('/admin', auth.requiresRole('admin'), ...);
+
+  //error handling
+  app.use(function(err, req, res, next)
+  {
+    var msg = 'Uh-oh, something went wrong.'
+    if (err.name === 'UnauthorizedError')
+    {
+      msg = 'Soz, your token is invalid.'
+    }
+    res.status(401).send(msg);
+  })
 };
